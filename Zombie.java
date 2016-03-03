@@ -14,9 +14,9 @@ import java.util.Set;
  */
 public class Zombie extends User{
  
-    private int     marinesEaten;
-    public  int     lives = 3;
-    public  int     level = 1;
+    public static  int     marinesEaten = 0;
+    public static  int     lives = 3;
+    public static  int     level = 1;
     private boolean rFoot = true;
     private boolean mFoot = true;
     private int     wTime = 0;  // Walking animation timer
@@ -39,9 +39,6 @@ public class Zombie extends User{
         checkSpeed();
         checkWorld();
         wTime++;
-        getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
-        getWorld().showText("Lives:" + lives,60,15);
-        getWorld().showText("Level:" + level,150,15);
         remove();
     }
     
@@ -93,11 +90,9 @@ public class Zombie extends User{
        
      public void remove(){
         if(lives <= 0){
-            getWorld().showText("Lives:" + 0,60,15);
             Greenfoot.playSound("Pain.wav");
-            getWorld().addObject(new ZombieGuts() , getX(), getY());
-            getWorld().removeObject(this); 
-            Greenfoot.setWorld(new LoseScreen(level , marinesEaten));
+            getWorld().removeObject(this);
+            Greenfoot.setWorld(new LoseScreen());
         }
     }
     

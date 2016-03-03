@@ -40,8 +40,7 @@ public class Bar extends Actor
      * @param 'initValue': the value the bar should be initially set to
      * @param 'maxValue': the highest value the bar is allowed to hold
      */
-    public Bar(String refText, String unitType, int initValue, int maxValue)
-    {
+    public Bar(String refText, String unitType, int initValue, int maxValue){
         referenceText = refText;
         unitOfMeasure = unitType;
         maximumValue = maxValue;

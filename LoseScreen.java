@@ -15,11 +15,11 @@ public class LoseScreen extends World{
     /**
      * Constructor for objects of class LoseScreen.
      */
-    public LoseScreen( int level , int marinesEaten){
+    public LoseScreen(){
         super(1000, 600, 1); 
+        this.level = Zombie.level;
+        this.marinesEaten = Zombie.marinesEaten;
         prepare();
-        this.level = level;
-        this.marinesEaten = marinesEaten;
     }
     
     public void prepare(){

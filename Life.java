@@ -8,12 +8,13 @@ import java.util.Random;  // (World, Actor, GreenfootImage, Greenfoot and MouseI
  * @version (a version number or a date)
  */
 public class Life extends PowerUps{
-
+    
     public void act(){
-        Zombie z = (Zombie)getOneIntersectingObject(Zombie.class);
-        if(z != null){
-            ++z.lives;
-            getWorld().removeObject(this);
-        }      
+        super.remove();
     }
+    
+   public void pUp(Zombie z){
+       z.lives++;
+    }
+    
 }
