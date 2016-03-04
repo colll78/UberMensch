@@ -8,17 +8,17 @@ import java.awt.Color;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class MyWorld extends World{
-    Bar hpbar;
+public class MyWorld extends World {
+  
     private static int numEnemies = 6;
+    public static int level = 1;
     Zombie zombie;
-    int x;
+    
     
     /**
      * Constructor for objects of class MyWorld.
      */
     public MyWorld(){    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1000, 600, 1); 
         setPaintOrder(Zombie.class, Fzombie.class, Boss1.class, Marine.class, ZMarine.class, Life.class, Dead.class, Bullet.class );
         prepare();
@@ -30,37 +30,35 @@ public class MyWorld extends World{
     }
     
     private void prepare(){
+        level = 1;
+     
         InGameButton igb = new InGameButton();
         addObject(igb , getWidth() - 15 , 15);
         
-        hpbar = new Bar("Zombie","Points", 100, 100);
-        addObject(hpbar, 150, 20);
-        
         zombie = new Zombie(0);
         addObject(zombie,getWidth()/2,getHeight()/2);
-        zombie.lives = 3;
-        zombie.level = 1;
         
-        Marine[] marine = new Marine[numEnemies];
         for(byte i = 0; i < numEnemies; ++i){
-            marine[i] = new Marine();
-            addObject(marine[i] , randomX() , randomY() );
+            Marine marine= new Marine();
+            addObject(marine , randomX() , randomY() );
         }
     }
     
      private void level(){
-        if(isComplete()){
-            removeActors();
-            ++zombie.level;
-            
-            if((Zombie.level % 2 == 0)){
-                for (int i = 1; i <= Zombie.level/2; i ++){
+        if(isClear()){ // if all marines and bosses have been killed
+            removeActors(); // remove the remaining actors
+            ++level; // increment level
+                // if the level is an even number
+            if((level % 2 == 0)){ 
+                    // spawn level/2 bosses
+                for (int i = 1; i <= level/2; i ++){
                     Boss1 b = new Boss1();
                     addObject( b, randomX() , randomY() );
                 }
             }
             else{
-                for (int i = 1; i <= zombie.level *2; ++i){
+                    // spawn level*2 marines
+                for (int i = 1; i <= level *2; ++i){
                     Marine marine = new Marine();
                     addObject( marine, randomX() , randomY() );
                 }
@@ -68,29 +66,38 @@ public class MyWorld extends World{
        }
      }
      
+    /**
+      * Removes all non enemy actors from this world.
+      */
      public void removeActors(){
          List remove = getObjects(ZMarine.class);
-         List remove2 = getObjects(Dead.class);
+         List remove2 =getObjects(Dead.class);
          for (Object objects : remove){
-             removeObject((ZMarine) objects);
+             removeObject((Actor)objects);
          }
-                
+         
          for (Object objects : remove2){
-             removeObject((Dead) objects);
+             removeObject((Actor)objects);
          }
      }
      
-     public boolean isComplete(){
+     /**
+       * Checks if all marines and bosses have been removed
+       * from this world.
+       */
+     public boolean isClear(){
          if(getObjects(Marine.class).isEmpty() && getObjects(Boss1.class).isEmpty()){
             return true;
          }
          return false;
      }
      
+     /**
+      * Show the stats of the game. 
+      */
      public void showStats(){
         showText("Marines Eaten:" + Zombie.marinesEaten,100,40);
-        showText("Lives:" + Zombie.lives,60,15);
-        showText("Level:" + Zombie.level,150,15);
+        showText("Level:" + level,150,15);
      }
      
      /**

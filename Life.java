@@ -14,7 +14,7 @@ public class Life extends PowerUps{
     }
     
    public void pUp(Zombie z){
-       z.lives++;
+       z.hpBar.add(10);
     }
     
 }

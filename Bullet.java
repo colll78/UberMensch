@@ -16,9 +16,11 @@ public class Bullet extends Projectiles{
     }
  
     public void act(){
-        setRotation(direction);
-        move(speed);           // move
-        remove();              // check if bullet has hit anything
+        if(getWorld()!= null){
+            setRotation(direction);
+            move(speed);           // move
+            remove();              // check if bullet has hit anything
+        }
     }
     
     public void remove(){
@@ -32,16 +34,14 @@ public class Bullet extends Projectiles{
               
             // when a zombie gets shot
           if(z != null){
-              --z.lives;
+              z.hpBar.subtract(20);
               deleteMe = true;
-              //z = null;
           }
           
           // when a ZMarine gets shot 
           if(zm != null){
               zm.deleteMe = true; 
               deleteMe = true;
-              //zm = null;
           }
           
           if (deleteMe == true){

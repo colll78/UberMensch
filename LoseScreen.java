@@ -15,9 +15,9 @@ public class LoseScreen extends World{
     /**
      * Constructor for objects of class LoseScreen.
      */
-    public LoseScreen(){
+    public LoseScreen(int level , int me){
         super(1000, 600, 1); 
-        this.level = Zombie.level;
+        this.level = level;
         this.marinesEaten = Zombie.marinesEaten;
         prepare();
     }
