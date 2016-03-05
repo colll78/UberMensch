@@ -46,12 +46,14 @@ public class MyWorld extends World {
     
      private void level(){
         if(isClear()){ // if all marines and bosses have been killed
-            removeActors(); // remove the remaining actors
+            removeActors(ZMarine.class); // remove the remaining actors
+            removeActors(Dead.class);
             ++level; // increment level
                 // if the level is an even number
             if((level % 2 == 0)){ 
                     // spawn level/2 bosses
                 for (int i = 1; i <= level/2; i ++){
+                    removeActors(Fzombie.class);
                     Boss1 b = new Boss1();
                     addObject( b, randomX() , randomY() );
                 }
@@ -69,14 +71,9 @@ public class MyWorld extends World {
     /**
       * Removes all non enemy actors from this world.
       */
-     public void removeActors(){
-         List remove = getObjects(ZMarine.class);
-         List remove2 =getObjects(Dead.class);
+     public void removeActors( Class c) {
+         List remove = getObjects(c);
          for (Object objects : remove){
-             removeObject((Actor)objects);
-         }
-         
-         for (Object objects : remove2){
              removeObject((Actor)objects);
          }
      }

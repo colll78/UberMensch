@@ -38,7 +38,8 @@ public class Marine extends AI{
              getWorld().addObject(zm , getX() , getY() );
              Dead d = new Dead();
              getWorld().addObject(d,getX(),getY());
+             drop (new Life() ,  25);
              getWorld().removeObject( this );
-        }
+             }
     }
 }

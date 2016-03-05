@@ -31,8 +31,9 @@ public class Boss1 extends AI{
     
     public void remove(){
         if(deleteMe){
-            //getWorld().addObject(new Dead() , this.getX() , this.getY());
+            getWorld().addObject(new Dead() , this.getX() , this.getY());
             getWorld().addObject(new Fzombie() , this.getX() , this.getY());
+            drop (new Life() ,  75);
             getWorld().removeObject(this);
         }
     }
