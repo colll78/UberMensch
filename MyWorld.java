@@ -14,7 +14,6 @@ public class MyWorld extends World {
     public static int level = 1;
     Zombie zombie;
     
-    
     /**
      * Constructor for objects of class MyWorld.
      */

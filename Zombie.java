@@ -18,6 +18,7 @@ public class Zombie extends User{
     public int wTime , sTimer ; // walking timer / speed boost timer
     final static int DEFAULT_SPEED = 2;
     public static int zSpeed = DEFAULT_SPEED;
+    long lastEat , time;
     
     /**
      * Constructs a Zombie. 
@@ -46,21 +47,30 @@ public class Zombie extends User{
     public void lookforEnemies(){//Remove Marines and add to score
         Marine m = (Marine) getOneIntersectingObject(Marine.class);
         if (m != null) {
-            m.deleteMe = true;
-            marinesEaten++;
+            m.hpBar.subtract(100);
             Greenfoot.playSound("slurp.wav");
         }
+       
+        ArmouredMarine am = (ArmouredMarine) getOneIntersectingObject(ArmouredMarine.class);
+        if (am != null && System.currentTimeMillis() > lastEat + 1000 ){
+            am.hpBar.subtract(25);
+            am.setRotation(this.getRotation());
+            am.move(50);
+            Greenfoot.playSound("slurp.wav");
+            lastEat = System.currentTimeMillis();
+        }
         
-        Boss1 boss = (Boss1) getOneIntersectingObject(Boss1.class);
-        if (boss != null) {       
-          boss.deleteMe = true;
+        Boss1 b = (Boss1) getOneIntersectingObject(Boss1.class);
+        if (b != null) {       
+          b.hpBar.subtract(25);
+          b.setRotation(this.getRotation());
           Greenfoot.playSound("slurp.wav");
          }
          
-         Pyro p = (Pyro)getOneObjectAtOffset(0, 0, Pyro.class);
-           if(p != null){
-               p.deleteMe = true;
-            }
+        Pyro p = (Pyro)getOneObjectAtOffset(0, 0, Pyro.class);
+        if(p != null){
+            p.deleteMe = true;
+        }
       }
       
     public void checkSpeed(){
